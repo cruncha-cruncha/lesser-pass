@@ -10,4 +10,4 @@ After logging in with a google account, enter a master password, and add some ne
 Lesser Pass leverages Web Crypto to generate passwords using 250000 rounds of PBKDF2 SHA-256. The relevent code is in [this](https://github.com/cruncha-cruncha/lesser-pass/blob/main/src/components/crypto/encrypt.js) file. Generated passwords can contain all 95 ASCII printable characters.
 
 ## Inspiration
-Full credit for this idea goes to [LessPass](https://lesspass.com/#/), and the Web Crypto code was adapted from their repo. The algorithm for converting from binary to base n was adapted from [this project](https://github.com/KvanTTT/BaseNcoding_).
+Full credit for this idea goes to [LessPass](https://lesspass.com/#/), and the Web Crypto code was adapted from their repo. The algorithm for converting from binary to base n was adapted from [this project](https://github.com/KvanTTT/BaseNcoding).
