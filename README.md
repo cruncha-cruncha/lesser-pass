@@ -2,7 +2,7 @@
 A password manager that doesn't store any passwords, only their salts. [Site](https://cruncha-cruncha.github.io/lesser-pass/)
 
 ## How to use
-Lesser Pass can't store passwords for you, but instead generates secure passwords. Every password requires: an account, a username, a desired password length, and an index. If your password is leaked, changing the index will generate a completely new password. In fact, changing any of the required fields will generate a completely new password. The notes field does not affect generated passwords in any way and is simply a convenience.  
+Lesser Pass can't store passwords for you, but instead generates secure passwords. Every password requires: an account, a username, a desired password length, and an index. If your password is leaked, changing the index is an easy way to force Lesser Pass to generate a completely new password, however changing the account or username will do the same thing. The notes field does not affect generated passwords in any way and is simply a convenience.  
 
 After logging in with a google account, enter a master password, and add some new password info. Clicking on a row will generate a password and copy it to your clipboard. Your master password is never saved, so don't forget it.
 
