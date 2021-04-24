@@ -5,18 +5,18 @@ import { BaseN } from './BaseN';
 export const calcPassword = async ({ profile, masterPassword }) => {
   const { account, username, index, length } = profile;
   const salt = account + username + index.toString(16);
-  const password = await pbkdf2er({ password: masterPassword, salt, iterations: 100000, digest: "SHA-256"});
+  const password = await pbkdf2er({ plainText: masterPassword, salt, iterations: 250000, digest: "SHA-256"});
   return password.substring(0, length);
 }
 
 const getAlphabet = () =>
   '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
-function pbkdf2er({ password, salt, iterations, digest }) {
+function pbkdf2er({ plainText, salt, iterations, digest }) {
   return window.crypto.subtle
     .importKey(
       "raw", // format
-      stringToArrayBuffer(password), // keyData
+      stringToArrayBuffer(plainText), // keyData
       "PBKDF2", // algorithm
       false, // extractable
       ["deriveKey"] // keyUsages
