@@ -62,8 +62,12 @@ export const useList = () => {
   }
 
   const genPassword = async (profile) => {
-    const password = await calcPassword({ profile, masterPassword });
-    return password;
+    if (masterPassword.length > 0) {
+      const password = await calcPassword({ profile, masterPassword });
+      return password;
+    } else {
+      return '';
+    } 
   }
 
   return {
