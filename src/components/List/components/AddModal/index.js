@@ -1,7 +1,7 @@
-
-
 import { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+
+import { validateField } from './validateField';
 
 export const AddModal = ({ isOpen, save, cancel }) => {
   const [account, setAccount] = useState('');
@@ -12,19 +12,23 @@ export const AddModal = ({ isOpen, save, cancel }) => {
   const [invalid, setInvalid] = useState([]);
 
   useEffect(() => {
-    const newInvalid = [];
-    if (account === '') {
-      newInvalid.push('account');
-    }
-    if (username === '') {
-      newInvalid.push('username');
-    }
-    if (length < 16 || length > 40) { // this upper limit depends on the algo
-      newInvalid.push('length');
-    }
-    if (index < 1) {
-      newInvalid.push('index');
-    }
+    const toCheck = [
+      { field: "account", value: account },
+      { field: "username", value: username },
+      { field: "length", value: length },
+      { field: "index", value: index },
+      { field: "notes", value: notes }
+    ];
+
+    const newInvalid = toCheck.reduce((output, val) => {
+      const { valid } = validateField(val);
+      if (!valid) {
+        return [ ...output, val.field ];
+      } else {
+        return [ ...output ];
+      }
+    }, []);
+
     setInvalid(newInvalid);
   }, [account, username, length, index]);
 

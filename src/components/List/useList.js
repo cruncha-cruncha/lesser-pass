@@ -7,6 +7,7 @@ import { addUserListener, updateUserAcc, deleteUserAcc } from '../DB';
 import { loginState, LOGIN_ENUM, uidState } from '../Login/state';
 import { masterPasswordState } from './state';
 import { calcPassword } from '../crypto/encrypt';
+import { validateField } from './components/AddModal/validateField';
 
 export const useList = () => {
   const [masterPassword, setMasterPassword] = useRecoilState(masterPasswordState);
@@ -53,8 +54,35 @@ export const useList = () => {
     return uuid;
   }
 
-  const updateAccs = (data) => {
-    data.forEach(({ id, ...rest }) => updateUserAcc({ uid, accId: id, data: rest }));
+  const updateAccs = ({ next }) => {
+    next.forEach(({ id, ...rest }) => {
+      const toCheck = [
+        { field: "account", value: rest.account },
+        { field: "username", value: rest.username },
+        { field: "length", value: rest.length },
+        { field: "index", value: rest.index },
+        { field: "notes", value: rest.notes }
+      ];
+
+      const validData = toCheck.reduce((output, val) => {
+        if (output === null) {
+          return null;
+        }
+
+        const { valid, coerced } = validateField(val);
+
+        if (!valid) {
+          if (!coerced) {
+            return null;
+          }
+          return { ...output, [val.field]: coerced };
+        }
+
+        return { ...output, [val.field]: val.value };
+      }, {});
+
+      updateUserAcc({ uid, accId: id, data: validData });
+    });
   }
 
   const deleteAccs = (data) => {

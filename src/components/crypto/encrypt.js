@@ -4,6 +4,10 @@ import { BaseN } from './BaseN';
 
 export const calcPassword = async ({ profile, masterPassword }) => {
   const { account, username, index, length } = profile;
+  if (!index || !length || length < 1 || length > 40) {
+    return '';
+  }
+
   const salt = account + username + index.toString(16);
   const password = await pbkdf2er({ plainText: masterPassword, salt, iterations: 250000, digest: "SHA-256"});
   return password.substring(0, length);
@@ -13,6 +17,10 @@ const getAlphabet = () =>
   '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
 function pbkdf2er({ plainText, salt, iterations, digest }) {
+  if (!plainText || !salt) {
+    return '';
+  }
+
   return window.crypto.subtle
     .importKey(
       "raw", // format

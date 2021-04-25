@@ -103,7 +103,8 @@ export const List = () => {
   const handleSaveEdit = () => {
     dispatchBtn({ type: 'edit', payload: 'save' });
     gridApi.stopEditing();
-    updateAccs(gridApi.getSelectedRows());
+    updateAccs({ next: gridApi.getSelectedRows() });
+    gridApi.setRowData( _.cloneDeep(accs) );
   }
 
   const handleDelete = () => {
@@ -183,8 +184,8 @@ export const List = () => {
             <Row>
               <Col className="d-flex">
                 <Form.Control type={hideMasterPassword ? 'password' : 'text'} placeholder="" value={masterPassword} onChange={e => setMasterPassword(e.target.value)}/>
-                <Button onClick={toggleMasterPasswordHidden} className={`ml-2${hideMasterPassword ? '' : ' px-4'}`}>
-                  {hideMasterPassword ? 'Reveal' : 'Hide'}
+                <Button onClick={toggleMasterPasswordHidden} className={`ml-2${hideMasterPassword ? '' : ' px-3'}`}>
+                  {hideMasterPassword ? 'Show' : 'Hide'}
                 </Button>
               </Col>
             </Row>
@@ -230,7 +231,7 @@ export const List = () => {
             {btnState.showDeleteBtn && <Button onClick={handleDelete}>Delete</Button>}
           </Col>
           <Col className="d-flex justify-content-end">
-            <Button onClick={handleExport}>Export to CSV</Button>
+            <Button variant="secondary" onClick={handleExport}>Export to CSV</Button>
           </Col>
         </Row>
       </div>)}

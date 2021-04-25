@@ -52,6 +52,7 @@ export const Login = () => {
           </Button>}
         {(login === LOGIN_ENUM['in'] || login === LOGIN_ENUM['temptOut']) &&
           <Button
+            variant="secondary"
             onClick={handleLogout}
             disabled={login !== LOGIN_ENUM['in']}
           >
