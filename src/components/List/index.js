@@ -61,6 +61,7 @@ export const List = () => {
 
   const {
     hide,
+    masterPassword,
     setMasterPassword,
     accs,
     addNewAcc,
@@ -181,7 +182,7 @@ export const List = () => {
             </Row>
             <Row>
               <Col className="d-flex">
-                <Form.Control type={hideMasterPassword ? 'password' : 'text'} placeholder="" onChange={e => setMasterPassword(e.target.value)}/>
+                <Form.Control type={hideMasterPassword ? 'password' : 'text'} placeholder="" value={masterPassword} onChange={e => setMasterPassword(e.target.value)}/>
                 <Button onClick={toggleMasterPasswordHidden} className={`ml-2${hideMasterPassword ? '' : ' px-4'}`}>
                   {hideMasterPassword ? 'Reveal' : 'Hide'}
                 </Button>
@@ -212,11 +213,11 @@ export const List = () => {
             onRowClicked={handleRowClick}
           >
             <AgGridColumn field="id" hide />
-            <AgGridColumn field="account" flex={1} headerCheckboxSelection={btnState.showCheckboxes} checkboxSelection={btnState.showCheckboxes} />
-            <AgGridColumn field="username" flex={1} />
+            <AgGridColumn field="account" flex={1} headerCheckboxSelection={btnState.showCheckboxes} checkboxSelection={btnState.showCheckboxes}  minWidth={150} />
+            <AgGridColumn field="username" flex={1} minWidth={150} />
             <AgGridColumn field="length" width={100} />
             <AgGridColumn field="index" width={100} />
-            <AgGridColumn field="notes" flex={1} />
+            <AgGridColumn field="notes" flex={1} minWidth={150} />
           </AgGridReact>
         </div>
           

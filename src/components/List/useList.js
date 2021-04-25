@@ -10,6 +10,7 @@ import { calcPassword } from '../crypto/encrypt';
 
 export const useList = () => {
   const [masterPassword, setMasterPassword] = useRecoilState(masterPasswordState);
+  const [masterTimeout, setMasterTimeout] = useState(null);
   const login = useRecoilValue(loginState);
   const uid = useRecoilValue(uidState);
   const [hide, setHide] = useState(true);
@@ -35,6 +36,17 @@ export const useList = () => {
     }
   }, [uid]);
 
+  useEffect(() => {
+    if (masterPassword.length > 0) {
+      clearTimeout(masterTimeout);
+      const newTimeout = setTimeout(() => {
+        setMasterPassword('');
+        console.log("password cleared");
+      }, 300000); // 5 minutes
+      setMasterTimeout(newTimeout);
+    }
+  }, [masterPassword]);
+
   const addNewAcc = (data) => {
     const uuid = uuidv4()
     updateUserAcc({ uid, accId: uuid, data });
@@ -56,6 +68,7 @@ export const useList = () => {
 
   return {
     hide,
+    masterPassword,
     setMasterPassword,
     accs,
     addNewAcc,
