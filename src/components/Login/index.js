@@ -36,7 +36,7 @@ export const Login = () => {
         setLogin(LOGIN_ENUM['out']);
       }
     });
-  }, []);
+  }, [setUid, setLogin]);
 
   return (
     <Row>

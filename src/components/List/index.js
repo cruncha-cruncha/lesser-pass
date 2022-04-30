@@ -155,7 +155,7 @@ export const List = () => {
         gridApi.setEnableCellTextSelection(true);
       }
     }
-  }, [btnState.amEditing]);  
+  }, [btnState.amEditing, gridApi]);  
 
   return (
     <>

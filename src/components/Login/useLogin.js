@@ -11,7 +11,7 @@ export const useLogin = () => {
     if (login === LOGIN_ENUM['out']) {
       setUid('');
     }
-  }, [login]);
+  }, [login, setUid]);
 
   return {
     login,

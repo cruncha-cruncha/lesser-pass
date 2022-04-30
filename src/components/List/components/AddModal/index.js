@@ -33,7 +33,7 @@ export const AddModal = ({ isOpen, save, cancel }) => {
     }, []);
 
     setInvalid(newInvalid);
-  }, [account, username, length, index]);
+  }, [account, username, length, index, notes]);
 
   useEffect(() => {
     setAccount('');

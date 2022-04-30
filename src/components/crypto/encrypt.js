@@ -14,7 +14,7 @@ export const calcPassword = async ({ profile, masterPassword }) => {
 }
 
 const getAlphabet = () =>
-  '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+  '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
 function pbkdf2er({ plainText, salt, iterations, digest }) {
   if (!plainText || !salt) {

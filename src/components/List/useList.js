@@ -46,7 +46,7 @@ export const useList = () => {
       }, 300000); // 5 minutes
       setMasterTimeout(newTimeout);
     }
-  }, [masterPassword]);
+  }, [masterPassword, setMasterPassword]);
 
   const addNewAcc = (data) => {
     const uuid = uuidv4()
