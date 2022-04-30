@@ -90,7 +90,7 @@ export const List = () => {
     dispatchBtn({ type: 'add', payload: true });
   }
 
-  const handleEdit = () => {
+  const handleToggleEdit = () => {
     if (btnState.amEditing) {
       gridApi.setRowData(accs);
       dispatchBtn({ type: 'edit', payload: 'cancel' });
@@ -225,10 +225,16 @@ export const List = () => {
         <Row className="mb-4">
           <Col className="d-flex justify-content-start">
             {btnState.showAddBtn && <Button className="mr-2" onClick={handleAddNew}>Add New</Button>}
-            {gridApi && btnState.showClearBtn && <Button className="mr-2" onClick={handleClear}>Clear</Button>}
+            {btnState.showClearBtn && <Button className="mr-2" variant="secondary" onClick={handleClear}>Cancel</Button>}
+            {btnState.showEditBtn &&
+              (btnState.amEditing ?
+                <Button className="mr-2" variant="secondary" onClick={handleToggleEdit}>Cancel</Button>
+              : 
+                <Button className="mr-2" onClick={handleToggleEdit}>Edit</Button>
+              )
+            }
             {btnState.amEditing && <Button className="mr-2" onClick={handleSaveEdit}>Save</Button>}
-            {btnState.showEditBtn && <Button className="mr-2" onClick={handleEdit}>{btnState.amEditing ? "Cancel" : "Edit"}</Button>}
-            {btnState.showDeleteBtn && <Button onClick={handleDelete}>Delete</Button>}
+            {btnState.showDeleteBtn && <Button variant="danger" onClick={handleDelete}>Delete</Button>}
           </Col>
           <Col className="d-flex justify-content-end">
             <Button variant="secondary" onClick={handleExport}>Export to CSV</Button>

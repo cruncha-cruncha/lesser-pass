@@ -6,7 +6,7 @@ export const DeleteModal = ({ isOpen, num, goDelete, cancel }) => {
   return (
     <Modal show={isOpen} animation={false} onHide={cancel}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>Delete Password</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

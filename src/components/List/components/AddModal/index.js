@@ -3,11 +3,14 @@ import { Button, Modal, Form } from 'react-bootstrap';
 
 import { validateField } from './validateField';
 
+const DEFAULT_PASSWORD_LENGTH = 24;
+const DEFAULT_INDEX = 1;
+
 export const AddModal = ({ isOpen, save, cancel }) => {
   const [account, setAccount] = useState('');
   const [username, setUsername] = useState('');
-  const [length, setLength] = useState(16);
-  const [index, setIndex] = useState(1);
+  const [length, setLength] = useState(DEFAULT_PASSWORD_LENGTH);
+  const [index, setIndex] = useState(DEFAULT_INDEX);
   const [notes, setNotes] = useState('');
   const [invalid, setInvalid] = useState([]);
 
@@ -35,8 +38,8 @@ export const AddModal = ({ isOpen, save, cancel }) => {
   useEffect(() => {
     setAccount('');
     setUsername('');
-    setLength(16);
-    setIndex(1);
+    setLength(DEFAULT_PASSWORD_LENGTH);
+    setIndex(DEFAULT_INDEX);
     setNotes('');
   }, [isOpen]);
 
@@ -47,7 +50,7 @@ export const AddModal = ({ isOpen, save, cancel }) => {
   return (
     <Modal show={isOpen} animation={false} onHide={cancel}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>New Password</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
