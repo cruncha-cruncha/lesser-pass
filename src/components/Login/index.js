@@ -40,9 +40,9 @@ export const Login = () => {
 
   return (
     <Row>
-      <Col className="d-flex justify-content-end">
+      <Col className="d-flex justify-content-center justify-content-md-end">
         {login === LOGIN_ENUM['unknown'] &&
-          <span>loading</span>}
+          <span>loading...</span>}
         {(login === LOGIN_ENUM['out'] || login === LOGIN_ENUM['temptIn']) && 
           <Button
             onClick={handleLogin}

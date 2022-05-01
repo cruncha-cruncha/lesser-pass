@@ -175,7 +175,7 @@ export const List = () => {
         />
 
         <Form>
-          <Form.Group controlId="formBasicEmail" className="mb-5">
+          <Form.Group controlId="formBasicEmail" className="mb-4">
             <Row>
               <Col>
                 <Form.Label>Master Password</Form.Label>
@@ -191,6 +191,14 @@ export const List = () => {
             </Row>
           </Form.Group>
         </Form>
+
+        {!btnState.amEditing && accs.length > 0 && (
+          <p>Clicking on a row will copy the password to your clipboard</p>
+        )}
+
+        {btnState.amEditing && (
+          <p>Click on a blue cell to edit it</p>
+        )}
 
         <div className="ag-theme-alpine mb-3" style={{ height: 400 }}>
           <AgGridReact
@@ -222,8 +230,8 @@ export const List = () => {
           </AgGridReact>
         </div>
           
-        <Row className="mb-4">
-          <Col className="d-flex justify-content-start">
+        <Row>
+          <Col xs={12} md className="d-flex justify-content-center justify-content-md-start mb-4">
             {btnState.showAddBtn && <Button className="mr-2" onClick={handleAddNew}>Add New</Button>}
             {btnState.showClearBtn && <Button className="mr-2" variant="secondary" onClick={handleClear}>Cancel</Button>}
             {btnState.showEditBtn &&
@@ -236,7 +244,7 @@ export const List = () => {
             {btnState.amEditing && <Button className="mr-2" onClick={handleSaveEdit}>Save</Button>}
             {btnState.showDeleteBtn && <Button variant="danger" onClick={handleDelete}>Delete</Button>}
           </Col>
-          <Col className="d-flex justify-content-end">
+          <Col xs={12} md className="d-flex justify-content-center justify-content-md-end mb-4">
             <Button variant="secondary" onClick={handleExport}>Export to CSV</Button>
           </Col>
         </Row>
