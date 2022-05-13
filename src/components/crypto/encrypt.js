@@ -48,9 +48,17 @@ function pbkdf2er({ plainText, salt, iterations, digest }) {
         const byteArr = bufferToByteArray(keyArray);
 
         const alphabet = getAlphabet();
-        const converted = byteArr.reduce((out, byte) => {
-          return out + alphabet.charAt(byte % alphabet.length)
-        }, '');
+
+        // I think (byte + offset) provides more equal probability of a
+        // character being selected **over the length of the output** than
+        // just using (byte) % alphabet.
+        let converted = '';
+        let offset = 0;
+        const remainder = 256 % alphabet.length;
+        byteArr.forEach((byte) => {
+          converted = converted + alphabet.charAt((byte + offset) % alphabet.length);
+          offset = (offset + remainder) % alphabet.length;
+        })
 
         return converted;
       })
