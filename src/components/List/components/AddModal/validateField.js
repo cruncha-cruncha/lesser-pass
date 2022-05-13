@@ -21,7 +21,7 @@ export const validateField = ({ field, value }) => {
       }
     }
     case "length": {
-      const max = 40;
+      const max = 32;
       if (!value || value < 1) {
         return { valid: false, coerced: 1 };
       } else if (value.length > max) {

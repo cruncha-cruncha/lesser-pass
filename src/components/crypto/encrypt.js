@@ -1,10 +1,8 @@
-import { BaseN } from './BaseN';
-
 // adapted from https://github.com/lesspass/lesspass
 
 export const calcPassword = async ({ profile, masterPassword }) => {
   const { account, username, index, length } = profile;
-  if (!index || !length || length < 1 || length > 40) {
+  if (!index || !length || length < 1 || length > 32) {
     return '';
   }
 
@@ -40,7 +38,7 @@ function pbkdf2er({ plainText, salt, iterations, digest }) {
         key, // baseKey
         {
           name: "AES-CTR",
-          length: 256,
+          length: 256, // aka number of output bits, 256 is the max supported
         }, // derivedKeyAlgorithm
         true, // extractable
         ["encrypt", "decrypt"] // keyUsages
@@ -49,24 +47,16 @@ function pbkdf2er({ plainText, salt, iterations, digest }) {
       window.crypto.subtle.exportKey("raw", derivedKey).then((keyArray) => {
         const byteArr = bufferToByteArray(keyArray);
 
-        const converted = new BaseN({
-          alphabet: getAlphabet(),
-          blockMaxBitsCount: 32
-        }).encodeBytes(byteArr);
+        const alphabet = getAlphabet();
+        const converted = byteArr.reduce((out, byte) => {
+          return out + alphabet.charAt(byte % alphabet.length)
+        }, '');
 
         return converted;
       })
     );
 };
 
-function stringToArrayBuffer(string) {
-  const base64String = unescape(encodeURIComponent(string));
-  const charList = base64String.split("");
-  const arrayBuffer = [];
-  for (let i = 0; i < charList.length; i += 1) {
-    arrayBuffer.push(charList[i].charCodeAt(0));
-  }
-  return new Uint8Array(arrayBuffer);
-}
+const stringToArrayBuffer = (string) => (new TextEncoder()).encode(string);
 
 const bufferToByteArray = (keyArray) => Array.from(new Uint8Array(keyArray));
