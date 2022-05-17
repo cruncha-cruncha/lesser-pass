@@ -11,3 +11,5 @@ Lesser Pass leverages Web Crypto to generate passwords using 250000 rounds of PB
 
 ## Inspiration
 Full credit for this idea goes to [LessPass](https://lesspass.com/#/), and the Web Crypto code was adapted from their repo. The algorithm for converting from binary to base n was adapted from [this project](https://github.com/KvanTTT/BaseNcoding).
+
+Why not use a key lengthening function, plug the result into a symmetric algo, then use that to en/decrypt passwords (so you could choose your own passwords)? Good question.
