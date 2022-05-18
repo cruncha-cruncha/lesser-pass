@@ -3,11 +3,10 @@ import { useDeleteModal, Props as useProps } from './useDeleteModal';
 
 type Props = useProps & {
   isHidden: boolean;
-  selectedCount: number;
 }
 
-export const DeleteModal = ({ isHidden, selectedCount, close, aidList, deleteLocalAccounts }: Props) => {
-  const { cancel, confirm } = useDeleteModal({ close, aidList, deleteLocalAccounts });
+export const DeleteModal = ({ isHidden, close, aidList }: Props) => {
+  const { selectedCount, cancel, confirm } = useDeleteModal({ close, aidList });
 
   return (
     <Modal show={!isHidden} animation={false} onHide={cancel}>

@@ -6,10 +6,9 @@ import { uidState } from "../../../../state";
 export type Props = {
     close: () => void;
     aidList: AID[],
-    deleteLocalAccounts: (aidList:AID[]) => void
 }
 
-export const useDeleteModal = ({ close, aidList, deleteLocalAccounts }: Props) => {
+export const useDeleteModal = ({ close, aidList }: Props) => {
     const uid = useRecoilValue(uidState);
 
     const cancel = () => {
@@ -22,12 +21,11 @@ export const useDeleteModal = ({ close, aidList, deleteLocalAccounts }: Props) =
         Promise.all(aidList.map(aid => {
             return deleteAccount({ uid, aid })
         }));
-
-        deleteLocalAccounts(aidList)
     }
 
     return {
         cancel,
-        confirm
+        confirm,
+        selectedCount: aidList.length
     }
 }

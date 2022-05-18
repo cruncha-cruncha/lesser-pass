@@ -1,68 +1,83 @@
 import { useState, useEffect } from "react";
-import { AID } from "../../types";
-import { accountsState } from "../../state";
+import { AID, LocalAccount, PendingEnum } from "../../types";
+import { accountsState, uidState } from "../../state";
 import { useRecoilValue } from "recoil";
 import { updateAccount } from "../../database";
-import { LocalAccount } from "../../types/LocalAccount";
 import { GridApi } from "ag-grid-community";
 
 export const useAccounts = () => {
   // data
+  const uid = useRecoilValue(uidState);
   const accounts = useRecoilValue(accountsState);
   const [localAccounts, setLocalAccounts] = useState<LocalAccount[]>([])
-  const [masterPassword, setMasterPassword] = useState('');
 
   // UI
   const [hideAddModal, setHideAddModal] = useState(true);
   const [hideDeleteModal, setHideDeleteModal] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [gridApi, setGridApi] = useState<GridApi|null>(null);
+  const [gridApi, setGridApi] = useState<GridApi | null>(null);
 
   // selectors
-  const selectedAccounts = localAccounts.filter(account => account.selected);
+  const selectedAccounts = localAccounts.filter(acc => acc.selected);
   const selectedAidList = selectedAccounts.map(acc => acc.id);
-  const selectedCount = selectedAidList.length
+  const selectedCount = selectedAidList.length;
 
   useEffect(() => {
-    // this needs to be more elegant
-    // (keep existing state)
-    setLocalAccounts(accounts.map(account => ({
-      ...account,
-      selected: false,
-      pending: false,
-      canEdit: false
-    })))
-  }, [accounts]);
+    if (!editing) {
+      setLocalAccounts((old) => {
+        const oldLookup = old.reduce<{ [s: string]: LocalAccount }>((out, acc) => {
+          if (!acc.id || acc.id in out) {
+            // bad, what do?
+          }
+          return { ...out, [acc.id]: acc };
+        }, {});
+
+        return accounts.map(acc => {
+          const oldAcc = (acc.id in oldLookup) ? oldLookup[acc.id] : null;
+          return {
+            ...acc,
+            selected: oldAcc ? oldAcc.selected : false,
+            pending: PendingEnum.No,
+          }
+        });
+      })
+    }
+  }, [accounts, editing]);
 
   const startEditing = () => {
     setEditing(true);
-    setLocalAccounts(old => old.map(acc => ({ ...acc, canEdit: true })))
   }
 
   const cancelEditing = () => {
     setEditing(false);
-    setLocalAccounts(old => old.map(acc => ({ ...acc, canEdit: false })))
   }
 
   const saveEditing = () => {
-    // do something with gridApi ??
-    // updateAccount( ... )
-    setEditing(false);
-    setLocalAccounts(old => old.map(acc => ({ ...acc, canEdit: false })))
-  }
-
-  const addLocalAccount = (account:LocalAccount) => addLocalAccounts([account]);
-  const addLocalAccounts = (accounts:LocalAccount[]) => {
-    setLocalAccounts((old) => ([ ...old, ...accounts]))
-  }
-
-  const deleteLocalAccount = (aid:AID) => deleteLocalAccounts([aid]);
-  const deleteLocalAccounts = (aidList:AID[]) => {
-    setLocalAccounts((old) => {
-      return old.map(acc => {
-        return { ...acc, selected: false, pending: aidList.includes(acc.id) }
+    if (gridApi) {
+      const toUpdate: LocalAccount[] = [];
+      gridApi.stopEditing();
+      gridApi.forEachNode(node => {
+        if (node.isSelected()) {
+          toUpdate.push({ ...node.data });
+        }
       });
-    })
+
+      Promise.all(toUpdate.map(acc => {
+        return updateAccount({ uid, data: acc })
+      }))
+    }
+
+    setEditing(false);
+  }
+
+  const updateSelection = () => {
+    if (gridApi) {
+      const data: LocalAccount[] = [];
+      gridApi.forEachNode(node => {
+        data.push({ ...node.data, selected: node.isSelected() });
+      });
+      setLocalAccounts(data);
+    }
   }
 
   const unselectAll = () => {
@@ -71,38 +86,35 @@ export const useAccounts = () => {
     }
 
     setLocalAccounts((old) => {
-      return old.map(acc => ({ ...acc, selected: false}));
+      return old.map(acc => ({ ...acc, selected: false }));
     })
   }
 
   const exportList = () => {
-    // do something with gridApi ??
+    if (gridApi) {
+      gridApi.exportDataAsCsv({
+        columnKeys: ["title", "username", "length", "index", "alphabet", "notes"]
+      });
+    }
   }
 
   return {
-    accounts: localAccounts,
-    setAccounts: (accounts:LocalAccount[]) => setLocalAccounts(accounts),
+    localAccounts,
+    selectedAidList,
     editing,
     startEditing,
     saveEditing,
     cancelEditing,
     gridApi,
-    setGridApi: (api:GridApi) => setGridApi(api),
-    masterPassword,
-    setMasterPassword: (s:string) => setMasterPassword(s),
-    selectedAidList,
-    selectedCount,
+    setGridApi: (api: GridApi) => setGridApi(api),
     addModalHidden: hideAddModal,
     openAddModal: () => setHideAddModal(false),
     closeAddModal: () => setHideAddModal(true),
     deleteModalHidden: hideDeleteModal,
     openDeleteModal: () => setHideDeleteModal(false),
     closeDeleteModal: () => setHideDeleteModal(true),
-    addLocalAccount,
-    addLocalAccounts,
-    deleteLocalAccount,
-    deleteLocalAccounts,
     unselectAll,
+    updateSelection,
     exportList
   };
 }

@@ -8,6 +8,7 @@ export const Logout = () => {
     <Row>
       <Col className="d-flex justify-content-center justify-content-md-end">
         <Button
+          variant='secondary'
           onClick={logout}
           disabled={!isIn}
         >

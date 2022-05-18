@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { masterPasswordState } from '../../../../state';
 
 export const useMasterPassword = () => {
+    const [masterPassword, setMasterPassword] = useRecoilState(masterPasswordState);
     const [hidden, setHidden] = useState(true);
 
     const toggleHide = () => {
@@ -9,6 +12,8 @@ export const useMasterPassword = () => {
 
     return {
         hidden,
-        toggleHide
+        toggleHide,
+        masterPassword,
+        setMasterPassword
     }
 }

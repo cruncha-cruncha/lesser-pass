@@ -10,16 +10,6 @@ type Props = {
   account: Account;
 }
 
-export const validateAccount = ({ account }: Props) => {
-  return validateId(account.id) &&
-    validateTitle(account.title) &&
-    validateUsername(account.username) &&
-    validateLength(account.length) &&
-    validateIndex(account.index) &&
-    validateAlphabet(account.alphabet) &&
-    validateNotes(account.notes);
-}
-
 export const validateId = (id: string) => {
   if (id.length <= 0) {
     return false;

@@ -4,6 +4,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { getApp } from '../firebase/getApp';
 import { accountsState, uidState, loginIsInState } from '../state';
 import { Account } from '../types';
+import { enforceAccountTyping } from './enforceAccountTyping';
 import { getCollectionRef } from './getCollectionRef';
 
 export const useInit = async (): Promise<void> => {
@@ -22,10 +23,11 @@ export const useInit = async (): Promise<void> => {
                     const id = doc.id;
                     
                     return {
-                        ...data,
+                        ...enforceAccountTyping(data),
                         id: id,
-                        title: ('title' in data) ? data.title : data.account,
-                    } as Account
+                        // TODO
+                        title: ('account' in data) ? data.account : data.title,
+                    } as Account;
                 });
                 
                 setAccounts(accounts);

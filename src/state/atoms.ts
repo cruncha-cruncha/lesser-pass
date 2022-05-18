@@ -7,6 +7,11 @@ export const loginStateState = atom<Login>({
     default: Login.Unknown
 });
 
+export const masterPasswordState = atom<string>({
+    key: 'masterPasswordState',
+    default: ''
+});
+
 export const uidState = atom<UID>({
     key: 'uidState',
     default: ''

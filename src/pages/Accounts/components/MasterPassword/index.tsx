@@ -1,13 +1,8 @@
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import { useMasterPassword } from './useMasterPassword';
 
-export type Props = {
-  password: string;
-  setPassword: (s:string) => void;
-}
-
-export const MasterPassword = ({ password, setPassword }: Props) => {
-  const { hidden, toggleHide } = useMasterPassword();
+export const MasterPassword = () => {
+  const { hidden, toggleHide, masterPassword, setMasterPassword } = useMasterPassword();
 
   return (
     <Form>
@@ -19,8 +14,8 @@ export const MasterPassword = ({ password, setPassword }: Props) => {
         </Row>
         <Row>
           <Col className="d-flex">
-            <Form.Control type={hidden ? 'password' : 'text'} placeholder="" value={password} onChange={e => setPassword(e.target.value)} />
-            <Button onClick={toggleHide} className={`ml-2${hidden ? '' : ' px-3'}`}>
+            <Form.Control type={hidden ? 'password' : 'text'} placeholder="" value={masterPassword} onChange={e => setMasterPassword(e.target.value)} />
+            <Button onClick={toggleHide} className={`ms-2${hidden ? '' : ' px-3'}`}>
               {hidden ? 'Show' : 'Hide'}
             </Button>
           </Col>

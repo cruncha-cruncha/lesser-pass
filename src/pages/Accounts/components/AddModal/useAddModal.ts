@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
-import { DEFAULT_PASSWORD_LENGTH, DEFAULT_INDEX, DEFAULT_ALPHABET } from '../../../../crypto/constants';
+import { useRecoilValue } from "recoil";
+import { DEFAULT_PASSWORD_LENGTH, DEFAULT_ALPHABET } from '../../../../crypto/constants';
+import { generateAID } from "../../../../crypto/generateAID";
+import { generateIndex } from "../../../../crypto/generateIndex";
 import {
     validateTitle,
     validateAlphabet,
@@ -9,18 +12,18 @@ import {
     validateUsername
 } from '../../../../crypto/validateAccount';
 import { createAccount } from "../../../../database";
-import { LocalAccount } from "../../../../types";
+import { uidState } from "../../../../state";
 
 export type Props = {
     close: () => void;
-    addLocalAccount: (account:LocalAccount) => void; 
 }
 
-export const useAddModal = ({ close, addLocalAccount }: Props) => {
+export const useAddModal = ({ close }: Props) => {
+    const uid = useRecoilValue(uidState);
     const [title, setTitle] = useState('');
     const [username, setUsername] = useState('');
     const [length, setLength] = useState(DEFAULT_PASSWORD_LENGTH.toString());
-    const [index, setIndex] = useState(DEFAULT_INDEX.toString());
+    const [index, setIndex] = useState(generateIndex().toString());
     const [alphabet, setAlphabet] = useState(DEFAULT_ALPHABET);
     const [notes, setNotes] = useState('');
 
@@ -28,7 +31,7 @@ export const useAddModal = ({ close, addLocalAccount }: Props) => {
         setTitle('');
         setUsername('');
         setLength(DEFAULT_PASSWORD_LENGTH.toString());
-        setIndex(DEFAULT_INDEX.toString());
+        setIndex(generateIndex().toString());
         setAlphabet(DEFAULT_ALPHABET);
         setNotes('');
     }
@@ -37,7 +40,8 @@ export const useAddModal = ({ close, addLocalAccount }: Props) => {
         reset();
     }, []);
 
-    const makePartialAccount = () => ({
+    const makeAccount = () => ({
+        id: generateAID(),
         title,
         username,
         length: Number(length),
@@ -48,25 +52,20 @@ export const useAddModal = ({ close, addLocalAccount }: Props) => {
 
     const cancel = () => {
         close();
+        reset();
     }
 
     const confirm = () => {
         close();
 
-        const partialAccount = makePartialAccount();
+        const newAccount = makeAccount();
 
         createAccount({
-            uid: '',
-            data: partialAccount
+            uid,
+            data: newAccount
         });
 
-        addLocalAccount({
-            ...partialAccount,
-            id: '',
-            selected: false,
-            pending: true,
-            canEdit: false
-        })
+        reset();
     }
 
     const validateStringNumber = (num: string, cb: (x: number) => boolean) => {

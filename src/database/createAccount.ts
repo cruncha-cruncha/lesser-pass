@@ -1,11 +1,11 @@
 import { setDoc } from "firebase/firestore";
 import { getAccountRef } from "./getAccountRef";
 import { UID, Account } from '../types';
-import { formatNewAccount } from "./formatNewAccount";
+import { sanitizeAccount } from "./sanitizeAccount";
 
-export const createAccount = async ({ uid, data }: {uid:UID, data:Omit<Account,'id'>}): Promise<boolean> => {
-    const newAccount = formatNewAccount(data);
-    if (newAccount === null) {
+export const createAccount = async ({ uid, data }: {uid:UID, data:Account}): Promise<boolean> => {
+    const newAccount = sanitizeAccount(data);
+    if (!newAccount) {
         return false;
     }
     

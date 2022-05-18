@@ -1,11 +1,15 @@
+import { AID } from "../../../../types";
 
 export type Props = {
-    selectedCount: number;
+    selectedAidList: AID[];
     amEditing: boolean;
 }
 
-export const useListButtons = ({ selectedCount, amEditing }: Props) => {
+export const useListButtons = ({ selectedAidList, amEditing }: Props) => {
+    const selectedCount = selectedAidList.length;
+
     return {
+        selectedCount,
         show: {
             add: selectedCount === 0 && !amEditing,
             clearSelected: selectedCount > 0 && !amEditing,
@@ -13,7 +17,7 @@ export const useListButtons = ({ selectedCount, amEditing }: Props) => {
             save: amEditing,
             cancelEdit: amEditing,
             delete: selectedCount > 0 && !amEditing,
-            export: true
+            export: !amEditing
         }
     }
 }

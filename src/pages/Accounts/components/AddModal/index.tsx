@@ -5,7 +5,7 @@ type Props = useProps & {
   isHidden: boolean;
 }
 
-export const AddModal = ({ isHidden, close, addLocalAccount }: Props) => {
+export const AddModal = ({ isHidden, close }: Props) => {
   const {
     field,
     setField,
@@ -13,7 +13,7 @@ export const AddModal = ({ isHidden, close, addLocalAccount }: Props) => {
     cancel,
     confirm,
     canAdd
-  } = useAddModal({ close, addLocalAccount });
+  } = useAddModal({ close });
 
   return (
     <Modal show={!isHidden} animation={false} onHide={close}>
@@ -52,7 +52,7 @@ export const AddModal = ({ isHidden, close, addLocalAccount }: Props) => {
 
       <Modal.Footer>
         <Button variant="secondary" onClick={cancel}>Cancel</Button>
-        <Button variant="primary" disabled={canAdd} onClick={confirm}>Add</Button>
+        <Button variant="primary" disabled={!canAdd} onClick={confirm}>Add</Button>
       </Modal.Footer>
     </Modal>
   )

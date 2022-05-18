@@ -1,4 +1,3 @@
-import { Row, Col } from 'react-bootstrap';
 
 import { useAccounts } from './useAccounts';
 import { AddModal } from './components/AddModal';
@@ -12,44 +11,37 @@ import { Main } from '../../layouts/Main';
 export const Accounts = () => {
 
   const {
-    accounts,
-    setAccounts,
+    localAccounts,
+    selectedAidList,
     editing,
     startEditing,
     saveEditing,
     cancelEditing,
-    gridApi,
     setGridApi,
-    masterPassword,
-    setMasterPassword,
-    selectedAidList,
-    selectedCount,
     addModalHidden,
     openAddModal,
     closeAddModal,
     deleteModalHidden,
     openDeleteModal,
     closeDeleteModal,
-    addLocalAccount,
-    deleteLocalAccounts,
     unselectAll,
+    updateSelection,
     exportList
   } = useAccounts();
 
   return (
       <Main>
-        <AddModal close={closeAddModal} isHidden={addModalHidden} addLocalAccount={addLocalAccount} />
-        <DeleteModal close={closeDeleteModal} isHidden={deleteModalHidden} selectedCount={0} aidList={selectedAidList} deleteLocalAccounts={deleteLocalAccounts} />
-        <MasterPassword password={masterPassword} setPassword={setMasterPassword} />
+        <AddModal close={closeAddModal} isHidden={addModalHidden} />
+        <DeleteModal close={closeDeleteModal} isHidden={deleteModalHidden} aidList={selectedAidList} />
+        <MasterPassword />
         <List 
-          accounts={accounts}
+          localAccounts={localAccounts}
           editing={editing}
-          gridApi={gridApi}
           setGridApi={setGridApi}
-          setAccounts={setAccounts}
+          updateSelection={updateSelection}
         />
         <ListButtons 
-          selectedCount={selectedCount}
+          selectedAidList={selectedAidList}
           amEditing={editing}
           openAddModal={openAddModal}
           openDeleteModal={openDeleteModal}
