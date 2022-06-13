@@ -3,5 +3,6 @@ export enum Login {
     Out,
     TemptIn,
     In,
-    TemptOut
+    TemptOut,
+    BadIn
 };

@@ -41,3 +41,11 @@ export const loginIsTemptOutState = selector({
         return login === LoginEnum.TemptOut;
     },
 });
+
+export const loginIsBadInState = selector({
+    key: 'loginIsBadInState',
+    get: ({ get }) => {
+        const login = get(loginStateState);
+        return login === LoginEnum.BadIn;
+    },
+});

@@ -5,12 +5,14 @@ import { useInit as authInit } from './auth';
 import { useInit as databaseInit } from './database';
 import { Accounts } from './pages/Accounts';
 import { Loading } from './pages/Loading';
+import { BadIn } from './pages/BadIn';
 import {
   loginIsUnknownState,
   loginIsOutState,
   loginIsTemptInState,
   loginIsInState,
-  loginIsTemptOutState
+  loginIsTemptOutState,
+  loginIsBadInState
 } from './state';
 
 function App() {
@@ -40,17 +42,21 @@ function Components() {
   const isTemptIn = useRecoilValue(loginIsTemptInState);
   const isTemptOut = useRecoilValue(loginIsTemptOutState);
   const isUnknown = useRecoilValue(loginIsUnknownState);
+  const isBadIn = useRecoilValue(loginIsBadInState);
   
   return (
     <>
-      {(isIn || isTemptOut) && <>
+      {isIn && <>
         <Accounts />
       </>}
-      {(isOut || isTemptIn) && <>
+      {isOut && <>
         <Login />
       </>}
-      {isUnknown && <>
+      {(isUnknown || isTemptOut || isTemptIn) && <>
         <Loading />
+      </>}
+      {isBadIn && <>
+        <BadIn />
       </>}
     </>
   )

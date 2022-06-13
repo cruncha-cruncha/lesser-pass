@@ -1,13 +1,15 @@
 import { useRecoilValue } from "recoil"
-import { loginIsInState } from "../../../../state"
+import { loginIsInState, loginIsBadInState } from "../../../../state"
 import { useLogout as useAuthLogout } from "../../../../auth";
 
 export const useLogout = () => {
     const isIn = useRecoilValue(loginIsInState);
+    const isBadIn = useRecoilValue(loginIsBadInState);
+
     const { logout } = useAuthLogout();
 
     return {
-        isIn,
+        canLogout: isIn || isBadIn,
         logout
     }
 }

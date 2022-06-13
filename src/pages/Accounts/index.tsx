@@ -52,11 +52,6 @@ export const Accounts = () => {
           unselectAll={unselectAll}
         />
         <Logout />
-          
-        {/* <Row>
-          <Col xs={12} md className="d-flex justify-content-center justify-content-md-start mb-4">
-          </Col>
-        </Row> */}
       </Main>
   )
 }
