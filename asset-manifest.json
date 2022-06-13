@@ -1,25 +1,15 @@
 {
   "files": {
-    "main.css": "/lesser-pass/static/css/main.02a95f9a.chunk.css",
-    "main.js": "/lesser-pass/static/js/main.48b68153.chunk.js",
-    "main.js.map": "/lesser-pass/static/js/main.48b68153.chunk.js.map",
-    "runtime-main.js": "/lesser-pass/static/js/runtime-main.0ac7ed35.js",
-    "runtime-main.js.map": "/lesser-pass/static/js/runtime-main.0ac7ed35.js.map",
-    "static/css/2.350cc35c.chunk.css": "/lesser-pass/static/css/2.350cc35c.chunk.css",
-    "static/js/2.033da42f.chunk.js": "/lesser-pass/static/js/2.033da42f.chunk.js",
-    "static/js/2.033da42f.chunk.js.map": "/lesser-pass/static/js/2.033da42f.chunk.js.map",
-    "static/js/3.b172d48f.chunk.js": "/lesser-pass/static/js/3.b172d48f.chunk.js",
-    "static/js/3.b172d48f.chunk.js.map": "/lesser-pass/static/js/3.b172d48f.chunk.js.map",
+    "main.css": "/lesser-pass/static/css/main.7fb04ecf.css",
+    "main.js": "/lesser-pass/static/js/main.bc6d716c.js",
+    "static/js/787.ecc5f9d4.chunk.js": "/lesser-pass/static/js/787.ecc5f9d4.chunk.js",
     "index.html": "/lesser-pass/index.html",
-    "static/css/2.350cc35c.chunk.css.map": "/lesser-pass/static/css/2.350cc35c.chunk.css.map",
-    "static/css/main.02a95f9a.chunk.css.map": "/lesser-pass/static/css/main.02a95f9a.chunk.css.map",
-    "static/js/2.033da42f.chunk.js.LICENSE.txt": "/lesser-pass/static/js/2.033da42f.chunk.js.LICENSE.txt"
+    "main.7fb04ecf.css.map": "/lesser-pass/static/css/main.7fb04ecf.css.map",
+    "main.bc6d716c.js.map": "/lesser-pass/static/js/main.bc6d716c.js.map",
+    "787.ecc5f9d4.chunk.js.map": "/lesser-pass/static/js/787.ecc5f9d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.0ac7ed35.js",
-    "static/css/2.350cc35c.chunk.css",
-    "static/js/2.033da42f.chunk.js",
-    "static/css/main.02a95f9a.chunk.css",
-    "static/js/main.48b68153.chunk.js"
+    "static/css/main.7fb04ecf.css",
+    "static/js/main.bc6d716c.js"
   ]
 }
