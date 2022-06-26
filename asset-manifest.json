@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/lesser-pass/static/css/main.7fb04ecf.css",
-    "main.js": "/lesser-pass/static/js/main.bc6d716c.js",
+    "main.js": "/lesser-pass/static/js/main.36a6362f.js",
     "static/js/787.ecc5f9d4.chunk.js": "/lesser-pass/static/js/787.ecc5f9d4.chunk.js",
     "index.html": "/lesser-pass/index.html",
     "main.7fb04ecf.css.map": "/lesser-pass/static/css/main.7fb04ecf.css.map",
-    "main.bc6d716c.js.map": "/lesser-pass/static/js/main.bc6d716c.js.map",
+    "main.36a6362f.js.map": "/lesser-pass/static/js/main.36a6362f.js.map",
     "787.ecc5f9d4.chunk.js.map": "/lesser-pass/static/js/787.ecc5f9d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7fb04ecf.css",
-    "static/js/main.bc6d716c.js"
+    "static/js/main.36a6362f.js"
   ]
 }
