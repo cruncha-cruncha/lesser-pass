@@ -8,10 +8,12 @@ import { Account } from "../../../../types"
 export const useList = () => {
     const masterPassword = useRecoilValue(masterPasswordState);
     const generatePassword = async (acc: Account) => {
-        navigator.clipboard.writeText(await calcPassword({
-            profile: acc,
-            masterPassword
-        }))
+        navigator.clipboard.write([ new ClipboardItem({
+            'text/plain': calcPassword({
+                profile: acc,
+                masterPassword
+            })
+        })])
     }
 
     return {
